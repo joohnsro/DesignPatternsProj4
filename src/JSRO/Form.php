@@ -7,69 +7,58 @@ class Form
 
     protected $action;
     protected $method;
+    protected $fields;
 
-    protected $campos;
-    protected $template;
-
-    protected $form;
-
-    public function __construct(FormTemplate $template)
-    {
-        $this->template = $template;
-    }
-
-    /**
-     * @param mixed $action
-     */
-    public function setAction($action)
+    public function __construct($action = "#", $method = "get")
     {
         $this->action = $action;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    /**
-     * @param mixed $method
-     */
-    public function setMethod($method)
-    {
         $this->method = $method;
-        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMethod()
+    public function adicionarCampos($field, $params, $title = null)
     {
-        return $this->method;
-    }
+        $fieldData = array();
 
-    public function adicionarCampos(iInputs $input)
-    {
-        $this->campos .= $input->getInput();
-        return $this->campos;
-    }
+        if ($field == "input"){
+            $fieldData['title'] = $title;
+            $fieldData['field'] = $this->getFieldInput($params);
+        }
 
-    public function getTemplate()
-    {
-        $this->template->ajusteHeader($this->action, $this->method);
-        $this->template->ajusteCampos($this->campos);
-        $this->template->ajusteFooter();
-
-        return $this->template->carregaTemplate();
+        $this->fields[] = $fieldData;
+        return $this->fields;
     }
 
     public function render()
     {
-        echo $this->getTemplate();
+        echo "<form action='" . $this->action . "' method='" . $this->method . "'>";
+        foreach ($this->fields as $field){
+            if ($field['title'] !== null && $field['title'] !== ""){
+                echo "<label for='" . $this->getParam("id", $field['field']) . "'>" . $field['title'] . "</label>";
+            }
+
+            echo $field['field'];
+        }
+        echo "</form>";
+    }
+
+    protected function getFieldInput($params){
+        return "<input " . $params . ">";
+    }
+
+    protected function getFieldTextArea($params, $value = null){
+        return "<textarea " . $params . " >" . $value . "</textarea>";
+    }
+
+    protected function getFieldButton($params, $value = null){
+        return "<button " . $params . " >" . $value . "</button>";
+    }
+
+    protected function getParam($nameParam, $string)
+    {
+        if (!preg_match("/$nameParam=[(\'|\")](.*?)[(\'|\")]/", $string, $matches)){
+            return null;
+        }
+        return $matches[1];
     }
 
 }

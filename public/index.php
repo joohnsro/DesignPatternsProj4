@@ -2,23 +2,6 @@
 require_once "../autoload.php";
 
 use JSRO\Form;
-use JSRO\Campo;
-use JSRO\TemplateHorizontal\FormHorizontal;
-use JSRO\TemplateHorizontal\InputTextHorizontal;
-use JSRO\TemplateHorizontal\InputEmailHorizontal;
-use JSRO\TemplateHorizontal\InputSubmitHorizontal;
-use JSRO\TemplateInline\FormInline;
-use JSRO\TemplateInline\InputTextInline;
-use JSRO\TemplateInline\InputEmailInline;
-use JSRO\TemplateInline\InputSubmitInline;
-
-$campo1 = new Campo();
-$campo2 = new Campo();
-$campo3 = new Campo();
-
-$campo1->setId("usuarioId")->setName("usuario")->setClass("form-control")->setTitle("Usuário")->setPlaceholder("Digite o usuário.")->setLabel("Usuário")->setLabelCol("col-md-4")->setCampoCol("col-md-8");
-$campo2->setId("emailId")->setName("email")->setClass("form-control")->setTitle("Email")->setPlaceholder("Digite o email.")->setLabel("Email")->setLabelCol("col-md-4")->setCampoCol("col-md-8");
-$campo3->setClass("btn btn-primary")->setValue("Enviar");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,45 +37,14 @@ $campo3->setClass("btn btn-primary")->setValue("Enviar");
     <?php } ?>
 
     <div class="row">
-        <h2 class="text-center">Formulário Inline</h2>
-        <div class="col-md-offset-2 col-md-8 text-center">
-            <?php
-            $input1 = new InputTextInline($campo1);
-            $input2 = new InputEmailInline($campo2);
-            $input3 = new InputSubmitInline($campo3);
-
-            $template = new FormInline();
-
-            $form = new Form($template);
-            $form->setAction("#")->setMethod("post");
-            $form->adicionarCampos($input1);
-            $form->adicionarCampos($input2);
-            $form->adicionarCampos($input3);
-
-            $form->render();
-            ?>
-        </div>
-    </div>
-
-    <hr>
-
-    <div class="row">
         <h2 class="text-center">Formulário Horizontal</h2>
         <div class="col-md-offset-3 col-md-6">
             <?php
-            $input4 = new InputTextHorizontal($campo1);
-            $input5 = new InputEmailHorizontal($campo2);
-            $input6 = new InputSubmitHorizontal($campo3);
-
-            $template2 = new FormHorizontal();
-
-            $form2 = new JSRO\Form($template2);
-            $form2->setAction("#")->setMethod("post");
-            $form2->adicionarCampos($input4);
-            $form2->adicionarCampos($input5);
-            $form2->adicionarCampos($input6);
-
-            $form2->render();
+            $form = new Form("#", "post");
+            $form->adicionarCampos("input", "type='text' id='usuario' name='usuarioTxt' required", "Usuário: ");
+            $form->adicionarCampos("input", "type='password' id='senha' name='senhaTxt' required", "Senha: ");
+            $form->adicionarCampos("input", "type='submit' value='Enviar'");
+            $form->render();
             ?>
         </div>
     </div>
