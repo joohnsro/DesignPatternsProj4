@@ -39,13 +39,28 @@ use JSRO\Form;
     <div class="row">
         <h2 class="text-center">Formulário Horizontal</h2>
         <div class="col-md-offset-3 col-md-6">
-            <?php
-            $form = new Form("#", "post");
-            $form->adicionarCampos("input", "type='text' id='usuario' name='usuarioTxt' required", "Usuário: ");
-            $form->adicionarCampos("input", "type='password' id='senha' name='senhaTxt' required", "Senha: ");
-            $form->adicionarCampos("input", "type='submit' value='Enviar'");
-            $form->render();
-            ?>
+            <div class="form-group">
+                <?php
+                $label1 = new \JSRO\Fields\LabelField();
+                $label1->createField("usuario", "Usuário");
+                $input1 = new \JSRO\Fields\InputField();
+                $input1->createField("text", "usuario", "usuarioTxt", "form-control", "", "");
+                ?>
+            </div>
+            <div class="form-group">
+                <?php
+                $label2 = new \JSRO\Fields\LabelField();
+                $label2->createField("senha", "Senha");
+                $input2 = new \JSRO\Fields\InputField();
+                $input2->createField("password", "senha", "senhaTxt", "form-control", "", "");
+                ?>
+            </div>
+            <div class="form-group">
+                <?php
+                $input3 = new \JSRO\Fields\InputField();
+                $input3->createField("submit", "", "", "btn btn-primary", "Enviar", "");
+                ?>
+            </div>
         </div>
     </div>
 
