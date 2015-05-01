@@ -7,14 +7,19 @@ use JSRO\FieldAbstract;
 class InputField extends FieldAbstract
 {
 
+    public function setField($param)
+    {
+       if (isset($param['type'])) $this->setType($param['type']);
+       if (isset($param['id'])) $this->setId($param['id']);
+       if (isset($param['name'])) $this->setName($param['name']);
+       if (isset($param['class'])) $this->setClass($param['class']);
+       if (isset($param['value'])) $this->setValue($param['value']);
+       if (isset($param['required'])) $this->setRequired($param['required']);
+    }
+
     public function getField()
     {
-        return '<input type="' . $this->getType() . '" id="' . $this->getId() . '" name="' . $this->getName() . '" class="' . $this->getClass() . '" value="' . $this->getValue() . '" ' . $this->getRequired() . '>';
+        echo '<input type="' . $this->getType() . '" id="' . $this->getId() . '" name="' . $this->getName() . '" class="' . $this->getClass() . '" value="' . $this->getValue() . '" ' . $this->getRequired() . '>';
     }
 
-    public function createField($type, $id, $name, $class, $value, $required)
-    {
-        echo '<input type="' . $type . '" id="' . $id . '" name="' . $name . '" class="' . $class . '" value="' . $value . '" ' . $required . '>';
-    }
-
-} 
+}

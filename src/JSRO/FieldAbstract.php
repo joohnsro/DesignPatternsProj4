@@ -14,6 +14,7 @@ abstract class FieldAbstract
     protected $title;
     protected $options;
 
+    public abstract function setField($params);
     public abstract function getField();
 
     /**

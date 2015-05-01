@@ -1,7 +1,15 @@
 <?php
 require_once "../autoload.php";
 
-use JSRO\Form;
+$request = new \JSRO\Request();
+$validator = new \JSRO\Validator($request);
+$form = new JSRO\Form($validator);
+
+$label1 = $form->createField(new \JSRO\Fields\LabelField(), array("id" => "usuario", "title" => "Usuário"));
+$input1 = $form->createField(new \JSRO\Fields\InputField(), array("id" => "usuario", "name" => "nameTxt", "type" => "text", "class" => "form-control"));
+$label2 = $form->createField(new \JSRO\Fields\LabelField(), array("id" => "senha", "title" => "Senha"));
+$input2 = $form->createField(new \JSRO\Fields\InputField(), array("id" => "senha", "name" => "senha", "type" => "password", "class" => "form-control"));
+$input3 = $form->createField(new \JSRO\Fields\InputField(), array("type" => "submit", "class" => "btn btn-primary", "value" => "Enviar"));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,39 +34,24 @@ use JSRO\Form;
 
 <div class="container">
 
-    <?php if (isset($_POST['usuario'])) { ?>
-        <div class="row">
-            <div class="col-md-offset-3 col-md-6 text-center" style="background-color: #eaeaea; padding: 30px 0 30px 0; margin-top: 30px;">
-                <p class="h5"><strong>:: DADOS DE USUÁRIO ::</strong></p>
-                <p class="h4"><strong>Usuário</strong> - <?php echo $_POST['usuario']; ?></p>
-                <p class="h4"><strong>Email</strong> - <?php echo $_POST['email']; ?></p>
-            </div>
-        </div>
-    <?php } ?>
-
     <div class="row">
         <h2 class="text-center">Formulário Horizontal</h2>
         <div class="col-md-offset-3 col-md-6">
             <div class="form-group">
                 <?php
-                $label1 = new \JSRO\Fields\LabelField();
-                $label1->createField("usuario", "Usuário");
-                $input1 = new \JSRO\Fields\InputField();
-                $input1->createField("text", "usuario", "usuarioTxt", "form-control", "", "");
+                $label1->getField();
+                $input1->getField();
                 ?>
             </div>
             <div class="form-group">
                 <?php
-                $label2 = new \JSRO\Fields\LabelField();
-                $label2->createField("senha", "Senha");
-                $input2 = new \JSRO\Fields\InputField();
-                $input2->createField("password", "senha", "senhaTxt", "form-control", "", "");
+                $label2->getField();
+                $input2->getField();
                 ?>
             </div>
             <div class="form-group">
                 <?php
-                $input3 = new \JSRO\Fields\InputField();
-                $input3->createField("submit", "", "", "btn btn-primary", "Enviar", "");
+                $input3->getField();
                 ?>
             </div>
         </div>
