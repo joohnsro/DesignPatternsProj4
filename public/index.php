@@ -4,12 +4,17 @@ require_once "../autoload.php";
 $request = new \JSRO\Request();
 $validator = new \JSRO\Validator($request);
 $form = new JSRO\Form($validator);
+$form->setAction("#")->setMethod("post");
 
 $label1 = $form->createField(new \JSRO\Fields\LabelField(), array("id" => "usuario", "title" => "Usuário"));
 $input1 = $form->createField(new \JSRO\Fields\InputField(), array("id" => "usuario", "name" => "nameTxt", "type" => "text", "class" => "form-control"));
 $label2 = $form->createField(new \JSRO\Fields\LabelField(), array("id" => "senha", "title" => "Senha"));
 $input2 = $form->createField(new \JSRO\Fields\InputField(), array("id" => "senha", "name" => "senha", "type" => "password", "class" => "form-control"));
 $input3 = $form->createField(new \JSRO\Fields\InputField(), array("type" => "submit", "class" => "btn btn-primary", "value" => "Enviar"));
+
+$form->addField($input1, $label1);
+$form->addField($input2, $label2);
+$form->addField($input3);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,23 +42,7 @@ $input3 = $form->createField(new \JSRO\Fields\InputField(), array("type" => "sub
     <div class="row">
         <h2 class="text-center">Formulário Horizontal</h2>
         <div class="col-md-offset-3 col-md-6">
-            <div class="form-group">
-                <?php
-                $label1->getField();
-                $input1->getField();
-                ?>
-            </div>
-            <div class="form-group">
-                <?php
-                $label2->getField();
-                $input2->getField();
-                ?>
-            </div>
-            <div class="form-group">
-                <?php
-                $input3->getField();
-                ?>
-            </div>
+            <?php $form->render(); ?>
         </div>
     </div>
 

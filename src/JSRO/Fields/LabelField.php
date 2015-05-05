@@ -18,4 +18,9 @@ class LabelField extends FieldAbstract
         echo '<label for="' . $this->getId() . '">' . $this->getTitle() . '</label>';
     }
 
+    public function pullField()
+    {
+        return '<label for="' . $this->getId() . '">' . $this->getTitle() . '</label>';
+    }
+
 }

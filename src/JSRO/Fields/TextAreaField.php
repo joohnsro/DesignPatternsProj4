@@ -19,6 +19,11 @@ class TextAreaField extends FieldAbstract
 
     public function getField()
     {
+        echo '<textarea type="' . $this->getType() . '" id="' . $this->getId() . '" name="' . $this->getName() . '" class="' . $this->getClass() . '" ' . $this->getRequired() . '>'. $this->getValue() .'</textarea>';
+    }
+
+    public function pullField()
+    {
         return '<textarea type="' . $this->getType() . '" id="' . $this->getId() . '" name="' . $this->getName() . '" class="' . $this->getClass() . '" ' . $this->getRequired() . '>'. $this->getValue() .'</textarea>';
     }
 

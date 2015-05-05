@@ -16,6 +16,7 @@ abstract class FieldAbstract
 
     public abstract function setField($params);
     public abstract function getField();
+    public abstract function pullField();
 
     /**
      * @param mixed $type

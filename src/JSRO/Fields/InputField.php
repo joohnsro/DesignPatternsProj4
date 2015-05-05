@@ -22,4 +22,9 @@ class InputField extends FieldAbstract
         echo '<input type="' . $this->getType() . '" id="' . $this->getId() . '" name="' . $this->getName() . '" class="' . $this->getClass() . '" value="' . $this->getValue() . '" ' . $this->getRequired() . '>';
     }
 
+    public function pullField()
+    {
+        return '<input type="' . $this->getType() . '" id="' . $this->getId() . '" name="' . $this->getName() . '" class="' . $this->getClass() . '" value="' . $this->getValue() . '" ' . $this->getRequired() . '>';
+    }
+
 }
