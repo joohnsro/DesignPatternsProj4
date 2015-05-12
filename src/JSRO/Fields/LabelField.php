@@ -7,20 +7,48 @@ use JSRO\FieldAbstract;
 class LabelField extends FieldAbstract
 {
 
-    public function setField($param)
+    private $field;
+    private $id;
+    private $title;
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
     {
-        if (isset($param['id'])) $this->setId($param['id']);
-        if (isset($param['title'])) $this->setTitle($param['title']);
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     public function getField()
     {
-        echo '<label for="' . $this->getId() . '">' . $this->getTitle() . '</label>';
-    }
-
-    public function pullField()
-    {
-        return '<label for="' . $this->getId() . '">' . $this->getTitle() . '</label>';
+        $this->field = '<label for="' . $this->getId() . '">' . $this->getTitle() . '</label>';
+        return $this->field;
     }
 
 }

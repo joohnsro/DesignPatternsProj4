@@ -48,22 +48,22 @@ class Form
         return $this->method;
     }
 
-    public function createField(FieldAbstract $field, $param)
+    public function createField(FieldAbstract $field)
     {
-        $this->field = $field->setField($param);
-        return $field;
+        $this->field = $field->getField();
+        return $this;
     }
 
     public function addField(FieldAbstract $field, LabelField $label = null)
     {
         if ($label !== null) {
             $this->fields[] = array(
-                "label" => $label->pullField(),
-                "field" => $field->pullField()
+                "label" => $label->getField(),
+                "field" => $field->getField()
             );
         } else {
             $this->fields[] = array(
-                "field" => $field->pullField()
+                "field" => $field->getField()
             );
         }
 
@@ -72,11 +72,9 @@ class Form
 
     public function render()
     {
-        echo '<form action="' . $this->getAction() . '" method="' . $this->getMethod() . '">';
+        echo '<form action="' . $this->getAction() . '" method="' . $this->getMethod() . '" class="form-horizontal">';
         foreach ($this->fields as $field){
-            echo '<div class="form-group">';
             echo ($field['label'] !== null) ? $field['label'] . $field['field'] : $field['field'];
-            echo '</div>';
         }
         echo '</form>';
     }

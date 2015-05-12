@@ -5,16 +5,6 @@ $request = new \JSRO\Request();
 $validator = new \JSRO\Validator($request);
 $form = new JSRO\Form($validator);
 $form->setAction("#")->setMethod("post");
-
-$label1 = $form->createField(new \JSRO\Fields\LabelField(), array("id" => "usuario", "title" => "Usuário"));
-$input1 = $form->createField(new \JSRO\Fields\InputField(), array("id" => "usuario", "name" => "nameTxt", "type" => "text", "class" => "form-control"));
-$label2 = $form->createField(new \JSRO\Fields\LabelField(), array("id" => "senha", "title" => "Senha"));
-$input2 = $form->createField(new \JSRO\Fields\InputField(), array("id" => "senha", "name" => "senha", "type" => "password", "class" => "form-control"));
-$input3 = $form->createField(new \JSRO\Fields\InputField(), array("type" => "submit", "class" => "btn btn-primary", "value" => "Enviar"));
-
-$form->addField($input1, $label1);
-$form->addField($input2, $label2);
-$form->addField($input3);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +32,35 @@ $form->addField($input3);
     <div class="row">
         <h2 class="text-center">Formulário Horizontal</h2>
         <div class="col-md-offset-3 col-md-6">
-            <?php $form->render(); ?>
+            <?php
+            $form = new \JSRO\Form(new \JSRO\Validator(new \JSRO\Request()));
+
+            $fieldset = new \JSRO\Fields\Fieldset();
+            $fieldset->setId("fieldSetId")->setName("fieldSetName");
+
+            $input = new \JSRO\Fields\InputField();
+            $input->setId('userId')->setName('userName')->setType('text')->setClass('form-control');
+
+            $label = new \JSRO\Fields\LabelField();
+            $label->setId('userId')->setTitle('User');
+
+            $input2 = new \JSRO\Fields\InputField();
+            $input2->setId('passId')->setName('passName')->setType('password')->setClass('form-control');
+
+            $label2 = new \JSRO\Fields\LabelField();
+            $label2->setId('passId')->setTitle('Pass');
+
+            $input3 = new \JSRO\Fields\InputField();
+            $input3->setType('submit')->setClass('btn btn-primary')->setValue('Enviar');
+
+            $fieldset->addField($input, $label);
+            $fieldset->addField($input2, $label2);
+            $fieldset->addField($input3);
+
+            $form->addField($fieldset);
+
+            echo $form->render();
+            ?>
         </div>
     </div>
 
