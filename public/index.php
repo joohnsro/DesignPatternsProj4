@@ -1,11 +1,4 @@
-<?php
-require_once "../autoload.php";
-
-$request = new \JSRO\Request();
-$validator = new \JSRO\Validator($request);
-$form = new JSRO\Form($validator);
-$form->setAction("#")->setMethod("post");
-?>
+<?php require_once "../autoload.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,36 +23,38 @@ $form->setAction("#")->setMethod("post");
 <div class="container">
 
     <div class="row">
-        <h2 class="text-center">Formulário Horizontal</h2>
+        <h2 class="text-center">Formulário</h2>
         <div class="col-md-offset-3 col-md-6">
             <?php
+
             $form = new \JSRO\Form(new \JSRO\Validator(new \JSRO\Request()));
+            $form->setShowMessage("middle");
 
-            $fieldset = new \JSRO\Fields\Fieldset();
-            $fieldset->setId("fieldSetId")->setName("fieldSetName");
+            $nome = new \JSRO\Fields\Input("text", "nome", "nome", "", "");
+            $nome->adicionaLabel("Nome:");
 
-            $input = new \JSRO\Fields\InputField();
-            $input->setId('userId')->setName('userName')->setType('text')->setClass('form-control');
+            $valor = new \JSRO\Fields\Input("text", "nome", "valor", "R$ 19.99", "");
+            $valor->adicionaLabel("Valor:");
 
-            $label = new \JSRO\Fields\LabelField();
-            $label->setId('userId')->setTitle('User');
+            $textarea = new \JSRO\Fields\Textarea("descricao", "descricao", "AUsu ahsuahu  uadhiaushd uiahsdiua shdu asdasd asdas dsdsdasd ia sgdas ilsaudaiou sgaiusgd aiyosdg oasdgt iasdgaisdg aiusdg aluisgdiya gsd asudhausgduasgdiasdg aiysgda iusdg iusgdyu gaius gasgduydgiausgd uy", "");
+            $textarea->adicionaLabel("Descrição:");
 
-            $input2 = new \JSRO\Fields\InputField();
-            $input2->setId('passId')->setName('passName')->setType('password')->setClass('form-control');
+            $options = [
+                ["name" => "Tênis para corrida", "value" => "tenis-corrida"],
+                ["name" => "Tênis para caminhada", "value" => "tenis-caminhada"],
+                ["name" => "Sapatênis", "value" => "sapatenis"]
+            ];
 
-            $label2 = new \JSRO\Fields\LabelField();
-            $label2->setId('passId')->setTitle('Pass');
+            $categoria = new \JSRO\Fields\Select("categoria", "categoria", $options, "");
+            $categoria->adicionaLabel("Categoria");
 
-            $input3 = new \JSRO\Fields\InputField();
-            $input3->setType('submit')->setClass('btn btn-primary')->setValue('Enviar');
+            $button = new \JSRO\Fields\Input("submit", "button", "button", "Enviar", "btn btn-primary");
 
-            $fieldset->addField($input, $label);
-            $fieldset->addField($input2, $label2);
-            $fieldset->addField($input3);
+            $dados = [$nome, $valor, $textarea, $categoria, $button];
 
-            $form->addField($fieldset);
+            $iterator = new \JSRO\IteratorValidado($dados);
 
-            echo $form->render();
+            $form->populate($iterator);
             ?>
         </div>
     </div>

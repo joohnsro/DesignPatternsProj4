@@ -2,13 +2,12 @@
 
 namespace JSRO;
 
-use JSRO\Fields\LabelField;
-
 class Form
 {
 
     protected $action;
     protected $method;
+    protected $showMessage;
     protected $field = array();
     protected $fields = array();
 
@@ -48,25 +47,33 @@ class Form
         return $this->method;
     }
 
+    /**
+     * @param mixed $showMessage
+     */
+    public function setShowMessage($showMessage)
+    {
+        $this->showMessage = $showMessage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShowMessage()
+    {
+        return $this->showMessage;
+    }
+
     public function createField(FieldAbstract $field)
     {
         $this->field = $field->getField();
         return $this;
     }
 
-    public function addField(FieldAbstract $field, LabelField $label = null)
+    public function addField(FieldAbstract $field)
     {
-        if ($label !== null) {
-            $this->fields[] = array(
-                "label" => $label->getField(),
-                "field" => $field->getField()
-            );
-        } else {
-            $this->fields[] = array(
-                "field" => $field->getField()
-            );
-        }
-
+        $this->fields[] = array(
+            "field" => $field->getField()
+        );
         return $this->fields;
     }
 
@@ -79,4 +86,51 @@ class Form
         echo '</form>';
     }
 
+    public function populate($dados)
+    {
+        if ($this->getShowMessage() == "top"){
+            echo "<ul class='text-danger'>";
+            foreach ($dados as $dado){
+                echo ($dado->getAlert() != "") ? "<li>" . $dado->getAlert() . "</li>" : null;
+            }
+            echo "</ul>";
+            echo "<form>";
+            foreach ($dados as $dado){
+                echo "<div class='form-group'>";
+                echo ($dado->getLabel() !== NULL) ? $dado->getLabel() : null;
+                echo $dado->getField();
+                echo "</div>";
+            }
+            echo "</form>";
+        }
+
+        if ($this->getShowMessage() == NULL || $this->getShowMessage() == "middle"){
+            echo "<form>";
+            foreach ($dados as $dado){
+                echo "<div class='form-group'>";
+                echo ($dado->getLabel() !== NULL) ? $dado->getLabel() : null;
+                echo $dado->getField();
+                echo ($dado->getAlert() != "") ? "<p class='text-danger'>" . $dado->getAlert() . "</p>" : null;
+                echo "</div>";
+            }
+            echo "</form>";
+        }
+
+        if ($this->getShowMessage() == "bottom"){
+            echo "<form>";
+            foreach ($dados as $dado){
+                echo "<div class='form-group'>";
+                echo ($dado->getLabel() !== NULL) ? $dado->getLabel() : null;
+                echo $dado->getField();
+                echo "</div>";
+            }
+            echo "</form>";
+            echo "<ul class='text-danger'>";
+            foreach ($dados as $dado){
+                echo ($dado->getAlert() != "") ? "<li>" . $dado->getAlert() . "</li>" : null;
+            }
+            echo "</ul>";
+        }
+
+    }
 }
